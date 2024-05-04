@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>Game yoian</title>
+	<link rel="stylesheet" type="text/css" href="game.css">
+</head>
+<body>
+    <div id="background">
+	<H2>GAME YOIAN</H2>
+	<H3>Score : <span id="Score">0</span></H3>
+	<div id="board"style="background-position:0px;">
+			<div id="area">
+			<div id="dino"></div>
+			<div id="box" style="margin-left: 600px"></div>
+		</div>
+	</div>
+</div>
+
+
+	<script type="text/javascript">
+            //menjalankan background
+    		function setBackgroundMoving() {
+    			setTimeout(function() {
+
+    				var bg = document.getElementById('board');
+    				bg.style.backgroundPosition = (parseInt(bg.style.
+    					backgroundPosition.replace('px',''))-1) + 'px';
+    			
+
+                //menjalankan score
+    			document.getElementById('Score').innerHTML =
+    			parseInt(document.getElementById('Score').innerHTML) +1;
+    			
+                //untuk panggil fungsinya terus menerus
+    			setBackgroundMoving();
+    			},5);
+		}
+        //inisialisasi fungsi background berjalan
+		setBackgroundMoving();
+        //untuk box berjalan
+        function setBoxMoving() {
+            var box = document.getElementById('box'),
+                dino = document.getElementById('dino');
+                setTimeout(function() {
+                box.style.marginLeft = (parseInt(box.style.marginLeft.replace('px',''
+                    )) - 1) + 'px';
+                if(parseInt(box.style.marginLeft.replace('px','')) < -100){
+                    box.style.marginLeft = "600px";
+                }
+                //untuk game over
+                if(dino.offsetTop + 50 >= box.offsetTop && 
+                   dino.offsetLeft + 50 >= box.offsetLeft &&
+                   dino.offsetTop + 50 <= box.offsetTop + 50 &&
+                   dino.offsetLeft <= box.offsetLeft + 50) {
+                   alert('Game Over, Score anda : ' + document.getElementById('Score').innerHTML);
+                }else{
+
+                //untuk panggil fungsinya terus menerus
+                setBoxMoving();
+            }
+
+            },5);
+         }
+         //inisialisasi fungsi box berjalan
+        setBoxMoving();
+
+
+            // untuk lompat spasi
+        document.addEventListener('keyup', function (e) {
+            if (e.keyCode === 32) {
+                document.getElementById('dino').style.marginTop = "30px";
+                document.getElementById('dino').setAttribute('class','freeze');
+
+                setTimeout(function() {
+                    document.getElementById('dino').style.marginTop = "170px";
+                    document.getElementById('dino').setAttribute('class','');
+                }, 1000);
+
+
+            }
+
+        });
+                
+	</script>
+</body>
+</html>
